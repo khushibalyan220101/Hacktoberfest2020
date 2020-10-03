@@ -1,0 +1,37 @@
+public class PermutationsInArray {
+
+	public static void main(String[] args) {
+		int[] arr = { 1, 2, 3 };
+		System.out.println(permute(arr));
+	}
+
+	public static List<List<Integer>> permute(int[] nums) {
+
+		List<List<Integer>> main = new ArrayList<>();
+		boolean[] avail = new boolean[nums.length];
+		Arrays.fill(avail, true);
+		permute(nums, avail, main, new ArrayList<Integer>());
+		return main;
+	}
+
+	private static void permute(int[] arr, boolean[] avail, List<List<Integer>> main, List<Integer> temp) {
+		if (temp.size() == arr.length) {
+			main.add(new ArrayList<Integer>(temp));
+			return;
+		}
+
+		for (int i = 0; i < arr.length; i++) {
+			if (!avail[i]) {
+				continue;
+			}
+			avail[i] = false;
+			temp.add(arr[i]);
+
+			permute(arr, avail, main, temp);
+			temp.remove(temp.size() - 1);// undo
+			avail[i] = true;// undo
+		}
+
+	}
+
+}
